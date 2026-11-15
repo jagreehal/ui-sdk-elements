@@ -25,7 +25,8 @@
   ],
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "NOTICE"
   ],
   "exports": {
     ".": {
