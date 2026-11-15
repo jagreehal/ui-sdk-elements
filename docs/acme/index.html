@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Acme's own component CDN · ui-sdk-elements</title>
+    <!-- The whole integration: two tags from Acme's CDN. -->
+    <link rel="stylesheet" href="./cdn/theme.css" />
+    <script type="module" src="./cdn/loader.js"></script>
+    <style>
+      body { margin: 0; background: var(--ds-paper); color: var(--ds-ink); font-family: system-ui, sans-serif; }
+      main { display: grid; gap: 1.5rem; max-width: 40rem; margin: 0 auto; padding: 3rem 1.25rem; }
+      h1 { margin: 0; font-size: 2rem; letter-spacing: -0.02em; }
+      p { margin: 0; color: var(--ds-ink-soft); line-height: 1.6; }
+      .row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+      code { font-size: 0.85em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="row"><h1>Acme</h1> <acme-badge tone="new">New</acme-badge></div>
+      <p>
+        This page loads <code>acme/cdn/loader.js</code>, a CDN Acme built from its own entries with
+        <code>elementsCdn()</code> from <code>ui-sdk-elements/vite</code>. Stock ui-sdk tags and Acme's own
+        <code>acme-badge</code> load on demand; the purple, pill-shaped brand is Acme's token file.
+      </p>
+      <div class="row">
+        <ui-toggle><button>Follow</button></ui-toggle>
+        <ui-dialog>
+          <ui-dialog-trigger><button>Start trial</button></ui-dialog-trigger>
+          <ui-dialog-backdrop hidden></ui-dialog-backdrop>
+          <ui-dialog-content hidden>
+            <ui-dialog-title>Start your Acme trial</ui-dialog-title>
+            <ui-dialog-description>Fourteen days, every feature, no card.</ui-dialog-description>
+            <ui-dialog-close><button>Start</button></ui-dialog-close>
+          </ui-dialog-content>
+        </ui-dialog>
+      </div>
+      <p><a href="../">All demos</a></p>
+    </main>
+  </body>
+</html>

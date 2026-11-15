@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ui-sdk-elements · demos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./ui/theme.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--ds-font);
+        color: var(--ds-ink);
+        background:
+          radial-gradient(ellipse 80% 50% at 10% -10%, var(--ds-accent-soft), transparent 55%),
+          linear-gradient(180deg, var(--ds-paper), #e8eee6);
+      }
+      main {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 3rem 1.25rem 4rem;
+      }
+      .eyebrow {
+        margin: 0 0 0.75rem;
+        font-family: var(--ds-font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ds-accent);
+      }
+      h1 {
+        margin: 0 0 0.75rem;
+        font-size: clamp(2rem, 5vw, 2.75rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      .lede {
+        margin: 0 0 2rem;
+        font-size: 1.05rem;
+        line-height: 1.55;
+        color: var(--ds-ink-soft);
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.75rem;
+      }
+      a.demo {
+        display: block;
+        padding: 1.1rem 1.25rem;
+        border: 1px solid var(--ds-line);
+        border-radius: var(--ds-radius-lg);
+        background: rgba(255, 255, 255, 0.82);
+        color: inherit;
+        text-decoration: none;
+        box-shadow: var(--ds-shadow);
+      }
+      a.demo:hover {
+        border-color: var(--ds-accent);
+      }
+      a.demo strong {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 1.05rem;
+      }
+      a.demo span {
+        font-size: 0.9rem;
+        line-height: 1.45;
+        color: var(--ds-ink-soft);
+      }
+      footer {
+        margin-top: 2.5rem;
+        font-size: 0.85rem;
+        color: var(--ds-ink-soft);
+      }
+      footer code {
+        font-family: var(--ds-font-mono);
+        font-size: 0.8em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">ui-sdk-elements</p>
+      <h1>Theme and ship ui-sdk. Compose pages from a catalog.</h1>
+      <p class="lede">
+        ui-sdk owns keyboard, focus, and ARIA. This package adds tokens, a CDN
+        loader, and a json-render catalog agents can fill without inventing markup.
+      </p>
+      <ul>
+        <li>
+          <a class="demo" href="./components.html">
+            <strong>Components</strong>
+            <span>Toggle, dialog, tabs, and the rest. Loaded on demand from the CDN bundle.</span>
+          </a>
+        </li>
+        <li>
+          <a class="demo" href="./cdn.html">
+            <strong>CDN loader</strong>
+            <span>One script tag. The page fetches only the entries its ui-* tags need.</span>
+          </a>
+        </li>
+        <li>
+          <a class="demo" href="./generated.html">
+            <strong>Catalog page</strong>
+            <span>Hand-written Spec rendered to HTML: Hero, pricing switch, FAQ accordion, demo dialog.</span>
+          </a>
+        </li>
+        <li>
+          <a class="demo" href="./examples/pulse/">
+            <strong>Pulse</strong>
+            <span>A groovebox: stock components, a step grid composed from ui-sdk core, a brand made only of tokens, Web Audio.</span>
+          </a>
+        </li>
+        <li>
+          <a class="demo" href="./examples/studio/">
+            <strong>Brand Studio</strong>
+            <span>Pick four tokens; a catalog-generated page and every component re-skin live, with contrast checks.</span>
+          </a>
+        </li>
+        <li>
+          <a class="demo" href="./acme/">
+            <strong>Your own CDN</strong>
+            <span>Acme's components (stock ui-sdk tags plus its own) built into its own CDN with one Vite plugin.</span>
+          </a>
+        </li>
+        <li>
+          <a class="demo" href="./report/index.html">
+            <strong>Executable stories</strong>
+            <span>Playwright drives these pages and records each claim as a story with screenshots.</span>
+          </a>
+        </li>
+      </ul>
+      <footer>
+        Built with <code>pnpm pages</code> and published by CI from the
+        <code>docs/</code> folder.
+      </footer>
+    </main>
+  </body>
+</html>

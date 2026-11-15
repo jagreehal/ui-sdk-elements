@@ -1,0 +1,152 @@
+{
+  "name": "ui-sdk-elements",
+  "version": "0.0.1",
+  "description": "Branded, on-demand web components built on ui-sdk: one set of tokens themes every component, a CDN loader fetches only the tags on the page, and a catalog lets agents generate pages. Not affiliated with Vercel.",
+  "license": "Apache-2.0",
+  "author": "Jag Reehal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagreehal/ui-sdk-elements.git"
+  },
+  "homepage": "https://jagreehal.github.io/ui-sdk-elements/",
+  "bugs": "https://github.com/jagreehal/ui-sdk-elements/issues",
+  "keywords": [
+    "ui-sdk",
+    "web-components",
+    "custom-elements",
+    "design-system",
+    "design-tokens",
+    "theming",
+    "cdn",
+    "json-render",
+    "generative-ui",
+    "agents",
+    "webmcp"
+  ],
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/loader.d.ts",
+      "default": "./dist/loader.js"
+    },
+    "./loader": {
+      "types": "./dist/loader.d.ts",
+      "default": "./dist/loader.js"
+    },
+    "./create-loader": {
+      "types": "./dist/create-loader.d.ts",
+      "default": "./dist/create-loader.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "default": "./dist/vite.js"
+    },
+    "./cdn/loader": "./dist/cdn/loader.js",
+    "./theme.css": "./dist/theme.css",
+    "./catalog": {
+      "types": "./dist/catalog.d.ts",
+      "default": "./dist/catalog.js"
+    },
+    "./spec-html": {
+      "types": "./dist/spec-html.d.ts",
+      "default": "./dist/spec-html.js"
+    },
+    "./render-spec": {
+      "types": "./dist/render-spec.d.ts",
+      "default": "./dist/render-spec.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime.d.ts",
+      "default": "./dist/runtime.js"
+    },
+    "./step-grid": {
+      "types": "./dist/entries/step-grid.d.ts",
+      "default": "./dist/entries/step-grid.js"
+    },
+    "./accordion": "./dist/entries/accordion.js",
+    "./checkbox": "./dist/entries/checkbox.js",
+    "./dialog": "./dist/entries/dialog.js",
+    "./field": "./dist/entries/field.js",
+    "./input": "./dist/entries/input.js",
+    "./menu": "./dist/entries/menu.js",
+    "./popover": "./dist/entries/popover.js",
+    "./select": "./dist/entries/select.js",
+    "./slider": "./dist/entries/slider.js",
+    "./switch": "./dist/entries/switch.js",
+    "./tabs": "./dist/entries/tabs.js",
+    "./toggle": "./dist/entries/toggle.js",
+    "./tooltip": "./dist/entries/tooltip.js",
+    "./button": "./dist/entries/button.js",
+    "./color-picker": "./dist/entries/color-picker.js",
+    "./menubar": "./dist/entries/menubar.js",
+    "./meter": "./dist/entries/meter.js",
+    "./segmented-control": "./dist/entries/segmented-control.js",
+    "./toast": "./dist/entries/toast.js",
+    "./toolbar": "./dist/entries/toolbar.js"
+  },
+  "sideEffects": [
+    "./dist/loader.js",
+    "./dist/entries/*.js",
+    "./dist/cdn/**/*.js",
+    "./dist/theme.css",
+    "./src/entries/*.ts",
+    "./src/loader.ts",
+    "./src/theme.css"
+  ],
+  "packageManager": "pnpm@12.17.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --config vite.lib.config.js && vite build --config vite.cdn.config.js && tsc -p tsconfig.build.json && cp src/theme.css dist/theme.css",
+    "pages": "pnpm build && node scripts/build-pages.ts && vite build --config vite.examples.config.js && vite build --config examples/acme-cdn/vite.config.js",
+    "preview": "vite preview",
+    "prepublishOnly": "pnpm build",
+    "changeset": "changeset",
+    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "release": "pnpm build && changeset publish",
+    "test": "node --test src/*.test.ts",
+    "test:e2e": "playwright test",
+    "check-types": "tsc",
+    "lint": "oxlint",
+    "format": "oxfmt src tests examples scripts *.config.ts *.config.js vite-plugin-generate.ts",
+    "format:check": "oxfmt --check src tests examples scripts *.config.ts *.config.js vite-plugin-generate.ts",
+    "quality": "pnpm check-types && pnpm lint && pnpm format:check && pnpm test && pnpm test:e2e"
+  },
+  "dependencies": {
+    "@json-render/core": "^0.22.0",
+    "zod": "^4.6.7"
+  },
+  "peerDependencies": {
+    "@ui-sdk/core": "^0.1.0-beta.1",
+    "@ui-sdk/web": "^0.1.0-beta.1",
+    "vite": ">=8"
+  },
+  "devDependencies": {
+    "@ai-sdk/openai-compatible": "^3.0.92",
+    "@playwright/test": "1.61.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@ui-sdk/core": "^0.1.0-beta.1",
+    "@ui-sdk/web": "^0.1.0-beta.1",
+    "ai": "^7.0.173",
+    "executable-stories-formatters": "^1.30.1",
+    "executable-stories-playwright": "^8.14.2",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "@changesets/cli": "^3.0.3",
+    "@oxlint/plugins": "1.89.0",
+    "oxlint": "1.89.0",
+    "oxfmt": "0.74.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ui-sdk-elements — CDN loader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/dist/cdn/theme.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--ds-font);
+        color: var(--ds-ink);
+        background: linear-gradient(180deg, var(--ds-paper), #eef2ec);
+      }
+      main {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 4rem;
+      }
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.75rem;
+        font-weight: 600;
+      }
+      .lede {
+        margin: 0 0 1.5rem;
+        color: var(--ds-ink-soft);
+        line-height: 1.5;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+      .card {
+        padding: 1.25rem;
+        border: 1px solid var(--ds-line);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.75);
+      }
+      .card + .card {
+        margin-top: 1rem;
+      }
+      code {
+        font-family: var(--ds-font-mono);
+        font-size: 0.8em;
+      }
+      a {
+        color: var(--ds-accent);
+      }
+    </style>
+    <script type="module" src="/dist/cdn/loader.js"></script>
+  </head>
+  <body>
+    <main>
+      <p style="font-family: var(--ds-font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-accent)">
+        CDN auto-loader
+      </p>
+      <h1>No per-component imports</h1>
+      <p class="lede">
+        This page only loads <code>loader.js</code> and <code>theme.css</code>.
+        When a <code>ui-*</code> tag appears, its entry is fetched. Rebuild with
+        <code>npm run build</code> if assets are missing.
+        <a href="/">← npm showcase</a>
+      </p>
+
+      <div class="card">
+        <div class="row">
+          <ui-toggle><button type="button">Bold</button></ui-toggle>
+          <ui-toggle default-pressed
+            ><button type="button">Italic</button></ui-toggle
+          >
+          <ui-dialog>
+            <ui-dialog-trigger>
+              <button type="button">Open dialog</button>
+            </ui-dialog-trigger>
+            <ui-dialog-backdrop hidden></ui-dialog-backdrop>
+            <ui-dialog-content hidden>
+              <ui-dialog-title>Loaded on demand</ui-dialog-title>
+              <ui-dialog-description>
+                The dialog entry was fetched because these tags are in the page.
+              </ui-dialog-description>
+              <div style="margin-top: 1rem; display: flex; justify-content: flex-end">
+                <ui-dialog-close>
+                  <button type="button" data-variant="solid">Close</button>
+                </ui-dialog-close>
+              </div>
+            </ui-dialog-content>
+          </ui-dialog>
+        </div>
+        <label style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: 0.875rem">
+          Notifications
+          <ui-switch default-checked>
+            <ui-switch-thumb></ui-switch-thumb>
+          </ui-switch>
+        </label>
+      </div>
+
+      <div class="card">
+        <ui-select placeholder="Choose a role" default-value="editor">
+          <ui-select-label>Role</ui-select-label>
+          <ui-select-trigger>
+            <button type="button">
+              <ui-select-value></ui-select-value>
+              <span aria-hidden="true">▾</span>
+            </button>
+          </ui-select-trigger>
+          <ui-select-content>
+            <ui-select-item value="viewer">Viewer</ui-select-item>
+            <ui-select-item value="editor">Editor</ui-select-item>
+            <ui-select-item value="admin">Admin</ui-select-item>
+          </ui-select-content>
+        </ui-select>
+      </div>
+    </main>
+  </body>
+</html>

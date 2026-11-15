@@ -1,0 +1,17 @@
+node_modules
+dist
+.DS_Store
+*.local
+.claude/
+.env
+.playwright-cli
+.playwright-mcp
+test-results
+# Built by `npm run pages` / `npm run stories`; CI rebuilds and publishes them to GitHub Pages.
+docs/ui/
+docs/examples/
+docs/generated.html
+docs/report/
+docs/acme/cdn/
+playwright-report
+blob-report

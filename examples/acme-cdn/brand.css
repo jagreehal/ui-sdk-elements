@@ -1,0 +1,31 @@
+/* Acme's brand: token overrides on ui-sdk-elements' theme, plus its own component. */
+:root {
+  --ds-ink: #1b1530;
+  --ds-ink-soft: #4a4363;
+  --ds-paper: #faf8ff;
+  --ds-paper-2: #efeafc;
+  --ds-line: #d6cdf3;
+  --ds-surface: #ffffff;
+  --ds-accent: #6d28d9;
+  --ds-accent-soft: #ede4ff;
+  --ds-accent-ink: #4c1d95;
+  --ds-on-accent: #ffffff;
+  --ds-radius: 999px;
+  --ds-radius-lg: 1.25rem;
+}
+
+acme-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  background: var(--ds-paper-2);
+  color: var(--ds-ink-soft);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+acme-badge[data-tone="new"] {
+  background: var(--ds-accent);
+  color: var(--ds-on-accent);
+}

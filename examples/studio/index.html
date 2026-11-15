@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brand Studio · ui-sdk-elements</title>
+    <meta name="description" content="Re-brand a ui-sdk design system live: pick tokens, watch a catalog-generated page and every component follow, check contrast, copy the CSS." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,650&display=swap" />
+    <script type="module" src="./main.ts"></script>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="controls" aria-label="Brand">
+        <header class="title">
+          <p class="eyebrow">ui-sdk-elements</p>
+          <h1>Brand Studio</h1>
+          <p class="lede">One set of tokens re-skins every component and every page the catalog generates.</p>
+        </header>
+
+        <section class="group" aria-labelledby="accent-label">
+          <h2 id="accent-label" class="group-title">Accent</h2>
+          <ui-color-picker id="accent" aria-label="Accent color" format="hex" default-value="#0f766e">
+            <ui-color-picker-area><ui-color-picker-area-thumb></ui-color-picker-area-thumb></ui-color-picker-area>
+            <ui-color-picker-slider channel="hue"><ui-color-picker-slider-thumb></ui-color-picker-slider-thumb></ui-color-picker-slider>
+            <div class="picker-row">
+              <ui-color-picker-input><input aria-label="Accent hex" /></ui-color-picker-input>
+              <ui-color-picker-swatches aria-label="Presets">
+                <ui-color-picker-swatch-item value="#0f766e"></ui-color-picker-swatch-item>
+                <ui-color-picker-swatch-item value="#4f46e5"></ui-color-picker-swatch-item>
+                <ui-color-picker-swatch-item value="#e11d48"></ui-color-picker-swatch-item>
+                <ui-color-picker-swatch-item value="#c2410c"></ui-color-picker-swatch-item>
+                <ui-color-picker-swatch-item value="#15803d"></ui-color-picker-swatch-item>
+                <ui-color-picker-swatch-item value="#7c3aed"></ui-color-picker-swatch-item>
+              </ui-color-picker-swatches>
+            </div>
+          </ui-color-picker>
+        </section>
+
+        <section class="group" aria-label="Shape and type">
+          <div class="field-row">
+            <span id="mode-label" class="field-label">Mode</span>
+            <ui-segmented-control id="mode" aria-labelledby="mode-label" default-value="light">
+              <ui-segmented-control-indicator></ui-segmented-control-indicator>
+              <ui-segmented-control-item value="light">Light</ui-segmented-control-item>
+              <ui-segmented-control-item value="dark">Dark</ui-segmented-control-item>
+            </ui-segmented-control>
+          </div>
+
+          <ui-slider id="radius" class="dial" aria-label="Corner radius" min="0" max="20" default-value="8">
+            <span class="field-label" aria-hidden="true">Corner radius</span>
+            <ui-slider-value></ui-slider-value>
+            <ui-slider-control><ui-slider-track><ui-slider-indicator></ui-slider-indicator><ui-slider-thumb aria-label="Corner radius"></ui-slider-thumb></ui-slider-track></ui-slider-control>
+          </ui-slider>
+
+          <ui-select id="font" default-value="sora">
+            <ui-select-label>Typeface</ui-select-label>
+            <ui-select-trigger><button><ui-select-value></ui-select-value> ▾</button></ui-select-trigger>
+            <ui-select-content>
+              <ui-select-item value="sora">Sora<ui-select-item-indicator></ui-select-item-indicator></ui-select-item>
+              <ui-select-item value="system">System<ui-select-item-indicator></ui-select-item-indicator></ui-select-item>
+              <ui-select-item value="serif">Fraunces<ui-select-item-indicator></ui-select-item-indicator></ui-select-item>
+              <ui-select-item value="mono">Plex Mono<ui-select-item-indicator></ui-select-item-indicator></ui-select-item>
+            </ui-select-content>
+          </ui-select>
+        </section>
+
+        <section class="group" aria-labelledby="contrast-label">
+          <h2 id="contrast-label" class="group-title">Contrast</h2>
+          <ul class="checks" id="checks"></ul>
+        </section>
+
+        <section class="group" aria-labelledby="tokens-label">
+          <div class="tokens-head">
+            <h2 id="tokens-label" class="group-title">Tokens</h2>
+            <ui-button id="copy"><button data-variant="solid">Copy CSS</button></ui-button>
+          </div>
+          <pre class="tokens" id="tokens" tabindex="0" aria-labelledby="tokens-label"></pre>
+        </section>
+      </aside>
+
+      <main class="preview" id="preview">
+        <ui-tabs default-value="page" aria-label="Preview">
+          <ui-tabs-list aria-label="Preview">
+            <ui-tabs-tab value="page"><button>Generated page</button></ui-tabs-tab>
+            <ui-tabs-tab value="components"><button>Components</button></ui-tabs-tab>
+          </ui-tabs-list>
+
+          <ui-tabs-panel value="page" keep-mounted>
+            <p class="note">This page is <code>sampleSpec</code> from the catalog, rendered with <code>renderSpec</code>. An agent writes the same Spec from a brief.</p>
+            <div class="page-frame"><div id="page"></div></div>
+          </ui-tabs-panel>
+
+          <ui-tabs-panel value="components" keep-mounted>
+            <div class="sampler">
+              <div class="tile">
+                <h3>Toolbar</h3>
+                <ui-toolbar aria-label="Formatting">
+                  <ui-toggle-group aria-label="Text style" multiple default-value="bold">
+                    <ui-toggle value="bold"><button>Bold</button></ui-toggle>
+                    <ui-toggle value="italic"><button>Italic</button></ui-toggle>
+                  </ui-toggle-group>
+                  <ui-toolbar-separator></ui-toolbar-separator>
+                  <ui-toolbar-button><button>Share</button></ui-toolbar-button>
+                </ui-toolbar>
+              </div>
+
+              <div class="tile">
+                <h3>Settings</h3>
+                <label class="setting">Email digest <ui-switch default-checked aria-label="Email digest"><ui-switch-thumb></ui-switch-thumb></ui-switch></label>
+                <label class="setting"><ui-checkbox aria-label="Product updates"><ui-checkbox-indicator aria-hidden="true">✓</ui-checkbox-indicator></ui-checkbox> Product updates</label>
+              </div>
+
+              <div class="tile">
+                <h3>Segmented control</h3>
+                <ui-segmented-control aria-label="View" default-value="board">
+                  <ui-segmented-control-indicator></ui-segmented-control-indicator>
+                  <ui-segmented-control-item value="list">List</ui-segmented-control-item>
+                  <ui-segmented-control-item value="board">Board</ui-segmented-control-item>
+                  <ui-segmented-control-item value="calendar">Calendar</ui-segmented-control-item>
+                </ui-segmented-control>
+              </div>
+
+              <div class="tile">
+                <h3>Slider and meter</h3>
+                <ui-slider aria-label="Volume" default-value="64" class="dial">
+                  <span class="field-label" aria-hidden="true">Volume</span>
+                  <ui-slider-value></ui-slider-value>
+                  <ui-slider-control><ui-slider-track><ui-slider-indicator></ui-slider-indicator><ui-slider-thumb aria-label="Volume"></ui-slider-thumb></ui-slider-track></ui-slider-control>
+                </ui-slider>
+                <ui-meter value="72" aria-label="Storage used">
+                  <ui-meter-label>Storage used</ui-meter-label>
+                  <ui-meter-value></ui-meter-value>
+                  <ui-meter-track><ui-meter-indicator></ui-meter-indicator></ui-meter-track>
+                </ui-meter>
+              </div>
+
+              <div class="tile">
+                <h3>Popups</h3>
+                <div class="row">
+                  <ui-menu>
+                    <ui-menu-trigger><button>Actions ▾</button></ui-menu-trigger>
+                    <ui-menu-content>
+                      <ui-menu-item value="rename" shortcut="mod+R">Rename</ui-menu-item>
+                      <ui-menu-item value="duplicate">Duplicate</ui-menu-item>
+                      <ui-menu-separator></ui-menu-separator>
+                      <ui-menu-item value="archive">Archive</ui-menu-item>
+                    </ui-menu-content>
+                  </ui-menu>
+                  <ui-dialog>
+                    <ui-dialog-trigger><button>Invite teammate</button></ui-dialog-trigger>
+                    <ui-dialog-backdrop hidden></ui-dialog-backdrop>
+                    <ui-dialog-content hidden>
+                      <ui-dialog-title>Invite a teammate</ui-dialog-title>
+                      <ui-dialog-description>They get access to every page in this workspace.</ui-dialog-description>
+                      <ui-dialog-close><button data-variant="solid">Send invite</button></ui-dialog-close>
+                    </ui-dialog-content>
+                  </ui-dialog>
+                </div>
+              </div>
+
+              <div class="tile wide">
+                <h3>Composed: <code>ui-step-grid</code></h3>
+                <ui-step-grid id="mini-grid" aria-label="Release plan" steps="8"></ui-step-grid>
+              </div>
+            </div>
+          </ui-tabs-panel>
+        </ui-tabs>
+      </main>
+    </div>
+
+    <ui-toast-region data-agent-hidden>
+      <template>
+        <ui-toast><ui-toast-title></ui-toast-title><ui-toast-description></ui-toast-description></ui-toast>
+      </template>
+    </ui-toast-region>
+  </body>
+</html>

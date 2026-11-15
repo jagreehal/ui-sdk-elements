@@ -1,0 +1,7 @@
+# Install scripts are opt-in. ffmpeg comes with executable-stories for video, which the stories don't record.
+allowBuilds:
+  "@ffmpeg-installer/darwin-arm64": false
+  "@ffmpeg-installer/linux-x64": false
+
+# Supply-chain policy: only install versions published at least a day ago (minutes).
+minimumReleaseAge: 1440

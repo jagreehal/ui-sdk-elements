@@ -1,0 +1,126 @@
+@import "./theme.css";
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-ink: var(--ds-ink);
+  --color-ink-soft: var(--ds-ink-soft);
+  --color-paper: var(--ds-paper);
+  --color-paper-2: var(--ds-paper-2);
+  --color-line: var(--ds-line);
+  --color-accent: var(--ds-accent);
+  --color-accent-soft: var(--ds-accent-soft);
+  --color-accent-ink: var(--ds-accent-ink);
+  --color-warn: var(--ds-warn);
+}
+
+@layer base {
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    color: var(--ds-ink);
+    background:
+      radial-gradient(ellipse 80% 50% at 10% -10%, #d8ebe3 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 0%, #e8e0d4 0%, transparent 50%),
+      linear-gradient(180deg, var(--ds-paper) 0%, #eef2ec 100%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: var(--ds-accent-soft);
+    color: var(--ds-accent-ink);
+  }
+}
+
+@layer components {
+  .demo-panel {
+    animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .demo-panel:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .demo-panel:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .demo-panel:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+  .demo-panel:nth-child(4) {
+    animation-delay: 0.2s;
+  }
+  .demo-panel:nth-child(5) {
+    animation-delay: 0.25s;
+  }
+  .demo-panel:nth-child(6) {
+    animation-delay: 0.3s;
+  }
+  .demo-panel:nth-child(7) {
+    animation-delay: 0.35s;
+  }
+  .demo-panel:nth-child(8) {
+    animation-delay: 0.4s;
+  }
+  .demo-panel:nth-child(9) {
+    animation-delay: 0.45s;
+  }
+  .demo-panel:nth-child(10) {
+    animation-delay: 0.5s;
+  }
+  .demo-panel:nth-child(11) {
+    animation-delay: 0.55s;
+  }
+  .demo-panel:nth-child(12) {
+    animation-delay: 0.6s;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-copy {
+  animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-copy > *:nth-child(2) {
+  animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.hero-copy > *:nth-child(3) {
+  animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
+}
+
+.hero-copy > *:nth-child(4) {
+  animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-panel,
+  .hero-copy,
+  .hero-copy > * {
+    animation: none;
+  }
+}

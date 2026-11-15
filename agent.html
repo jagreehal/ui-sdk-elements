@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ui-sdk-elements — agent catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        font-family: var(--ds-font, "Sora", system-ui, sans-serif);
+        color: var(--ds-ink, #14201a);
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(180deg, var(--ds-paper, #f3f6f1), #eef2ec);
+      }
+      main {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+        display: grid;
+        gap: 1.25rem;
+      }
+      @media (min-width: 960px) {
+        main {
+          grid-template-columns: 1fr 1fr;
+          align-items: start;
+        }
+        header,
+        #prompt-out {
+          grid-column: 1 / -1;
+        }
+      }
+      header h1 {
+        margin: 0.25rem 0 0.5rem;
+        font-size: 1.75rem;
+      }
+      header p {
+        margin: 0;
+        color: var(--ds-ink-soft, #3d4f45);
+        line-height: 1.5;
+      }
+      .panel {
+        border: 1px solid var(--ds-line, #c5d0c4);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 1rem;
+        display: grid;
+        gap: 0.75rem;
+      }
+      label {
+        display: grid;
+        gap: 0.35rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+      textarea,
+      select,
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid var(--ds-line, #c5d0c4);
+        border-radius: 0.5rem;
+        padding: 0.65rem 0.75rem;
+        font: inherit;
+        background: #fff;
+      }
+      #model {
+        font-family: var(--ds-font-mono, ui-monospace, monospace);
+        font-size: 0.85rem;
+      }
+      textarea {
+        min-height: 6rem;
+        resize: vertical;
+      }
+      #spec {
+        min-height: 16rem;
+        font-family: var(--ds-font-mono, ui-monospace, monospace);
+        font-size: 0.75rem;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: 1px solid var(--ds-line, #c5d0c4);
+        border-radius: 0.5rem;
+        background: var(--ds-paper, #f3f6f1);
+        padding: 0.5rem 0.85rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      button.primary {
+        border-color: var(--ds-accent, #0f766e);
+        background: var(--ds-accent, #0f766e);
+        color: #fff;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+      #status {
+        font-family: var(--ds-font-mono, ui-monospace, monospace);
+        font-size: 0.75rem;
+        color: var(--ds-ink-soft, #3d4f45);
+      }
+      #status[data-tone="ok"] {
+        color: var(--ds-accent, #0f766e);
+      }
+      #status[data-tone="warn"] {
+        color: var(--ds-warn, #b45309);
+      }
+      #status[data-tone="error"] {
+        color: #b91c1c;
+      }
+      #preview {
+        min-height: 12rem;
+      }
+      #prompt-out {
+        white-space: pre-wrap;
+        font-family: var(--ds-font-mono, ui-monospace, monospace);
+        font-size: 0.7rem;
+        line-height: 1.4;
+        max-height: 18rem;
+        overflow: auto;
+        border: 1px solid var(--ds-line, #c5d0c4);
+        border-radius: 0.75rem;
+        background: #fff;
+        padding: 0.75rem;
+      }
+      a {
+        color: var(--ds-accent, #0f766e);
+      }
+      .eyebrow {
+        font-family: var(--ds-font-mono, ui-monospace, monospace);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ds-accent, #0f766e);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">catalog → provider/model → ui-sdk</p>
+        <h1>Agent page builder</h1>
+        <p>
+          AI picks from the catalog and emits a flat Spec via
+          <code>/api/generate</code> (<code>provider/model</code>, e.g.
+          <code>opencode-go/beam-free</code> or <code>ollama/qwen3.5:4b</code>).
+          <code>renderSpec</code> injects <code>ui-*</code> tags; the auto-loader
+          fetches only those entry modules.
+          <a href="/">Showcase</a> · <a href="/cdn.html">CDN</a>
+        </p>
+      </header>
+
+      <section class="panel">
+        <label>
+          Brief
+          <textarea id="brief"></textarea>
+        </label>
+        <label>
+          Model (<code>provider/model</code>)
+          <input
+            id="model"
+            list="model-list"
+            placeholder="opencode-go/beam-free"
+            autocomplete="off"
+          />
+          <datalist id="model-list"></datalist>
+        </label>
+        <div class="row">
+          <button type="button" class="primary" id="generate">Generate</button>
+          <button type="button" id="render">Render Spec</button>
+          <button type="button" id="show-prompt">Toggle catalog prompt</button>
+          <button type="button" id="open-static">Open static page</button>
+        </div>
+        <p id="status">Starting…</p>
+        <p id="loaded" style="font-family: var(--ds-font-mono, ui-monospace, monospace); font-size: 0.75rem; color: var(--ds-ink-soft, #3d4f45); margin: 0;">
+          Loaded entry modules: []
+        </p>
+        <label>
+          Spec JSON
+          <textarea id="spec" spellcheck="false"></textarea>
+        </label>
+      </section>
+
+      <section class="panel">
+        <strong style="font-size: 0.9rem">Preview</strong>
+        <div id="preview"></div>
+      </section>
+
+      <pre id="prompt-out" hidden></pre>
+    </main>
+    <script type="module" src="/src/agent.js"></script>
+  </body>
+</html>

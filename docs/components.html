@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Components · ui-sdk-elements</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./ui/theme.css" />
+    <script type="module" src="./ui/loader.js"></script>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--ds-font);
+        color: var(--ds-ink);
+        background:
+          radial-gradient(ellipse 70% 40% at 90% 0%, var(--ds-accent-soft), transparent 50%),
+          linear-gradient(180deg, var(--ds-paper), #e8eee6);
+      }
+      .wrap {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 4rem;
+      }
+      .eyebrow {
+        margin: 0 0 0.75rem;
+        font-family: var(--ds-font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ds-accent);
+      }
+      h1 {
+        margin: 0 0 0.75rem;
+        font-family: "Fraunces", var(--ds-font);
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      .lede {
+        margin: 0 0 0.75rem;
+        max-width: 40rem;
+        font-size: 1.05rem;
+        line-height: 1.55;
+        color: var(--ds-ink-soft);
+      }
+      .nav {
+        margin: 0 0 2rem;
+        font-family: var(--ds-font-mono);
+        font-size: 0.75rem;
+      }
+      .nav a {
+        color: var(--ds-accent);
+      }
+      .head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+      }
+      .head h2 {
+        margin: 0;
+        font-size: 1.35rem;
+        font-weight: 600;
+      }
+      #event-log {
+        min-width: 14rem;
+        min-height: 2.5rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--ds-line);
+        border-radius: var(--ds-radius);
+        background: rgba(255, 255, 255, 0.6);
+        font-family: var(--ds-font-mono);
+        font-size: 0.75rem;
+        color: var(--ds-ink-soft);
+      }
+      #event-log p {
+        margin: 0.15rem 0;
+      }
+      .grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+      }
+      .panel {
+        padding: 1.25rem;
+        border: 1px solid var(--ds-line);
+        border-radius: var(--ds-radius-lg);
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: var(--ds-shadow);
+      }
+      .panel.wide {
+        grid-column: 1 / -1;
+      }
+      @media (min-width: 48rem) {
+        .panel.wide {
+          grid-column: span 2;
+        }
+      }
+      .panel h3 {
+        margin: 0 0 0.25rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+      .panel .hint {
+        margin: 0 0 1rem;
+        font-size: 0.875rem;
+        color: var(--ds-ink-soft);
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      label.line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        font-size: 0.875rem;
+      }
+      label.check {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+      }
+      code {
+        font-family: var(--ds-font-mono);
+        font-size: 0.8em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <p class="eyebrow">ui-sdk-elements</p>
+      <h1>Component showcase</h1>
+      <p class="lede">
+        Behavior from ui-sdk. Theme and lazy loading from this package. Try Tab,
+        arrows, Space, Enter, and Escape.
+      </p>
+      <p class="nav"><a href="./">← demos</a> · <a href="./cdn.html">CDN loader</a></p>
+
+      <div class="head">
+        <h2>Controls</h2>
+        <div id="event-log" aria-live="polite">
+          <p>Events appear here…</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section class="panel">
+          <h3>Toggle</h3>
+          <p class="hint">Pressed state with <code>aria-pressed</code>.</p>
+          <div id="formatting" class="row">
+            <ui-toggle><button type="button">Bold</button></ui-toggle>
+            <ui-toggle><button type="button">Italic</button></ui-toggle>
+            <ui-toggle default-pressed
+              ><button type="button">Underline</button></ui-toggle
+            >
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Switch &amp; Checkbox</h3>
+          <p class="hint">Settings and independent choices.</p>
+          <div class="stack">
+            <label class="line">
+              Email notifications
+              <ui-switch id="notify" default-checked>
+                <ui-switch-thumb></ui-switch-thumb>
+              </ui-switch>
+            </label>
+            <label class="check">
+              <ui-checkbox default-checked>
+                <ui-checkbox-indicator aria-hidden="true">✓</ui-checkbox-indicator>
+              </ui-checkbox>
+              Weekly digest
+            </label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Select</h3>
+          <p class="hint">Popup list with typeahead.</p>
+          <ui-select id="role" placeholder="Choose a role" default-value="editor">
+            <ui-select-label>Role</ui-select-label>
+            <ui-select-trigger>
+              <button type="button">
+                <ui-select-value></ui-select-value>
+                <span aria-hidden="true">▾</span>
+              </button>
+            </ui-select-trigger>
+            <ui-select-content>
+              <ui-select-item value="viewer">Viewer</ui-select-item>
+              <ui-select-item value="editor">Editor</ui-select-item>
+              <ui-select-item value="admin">Admin</ui-select-item>
+            </ui-select-content>
+          </ui-select>
+        </section>
+
+        <section class="panel">
+          <h3>Tabs</h3>
+          <p class="hint">One tab stop; arrows move selection.</p>
+          <ui-tabs default-value="account">
+            <ui-tabs-list aria-label="Settings">
+              <ui-tabs-tab value="account"
+                ><button type="button">Account</button></ui-tabs-tab
+              >
+              <ui-tabs-tab value="password"
+                ><button type="button">Password</button></ui-tabs-tab
+              >
+              <ui-tabs-tab value="billing"
+                ><button type="button">Billing</button></ui-tabs-tab
+              >
+            </ui-tabs-list>
+            <ui-tabs-panel value="account"
+              >Manage your profile name, avatar, and email.</ui-tabs-panel
+            >
+            <ui-tabs-panel value="password"
+              >Choose a new password and review recent sign-ins.</ui-tabs-panel
+            >
+            <ui-tabs-panel value="billing"
+              >Update your plan and download invoices.</ui-tabs-panel
+            >
+          </ui-tabs>
+        </section>
+
+        <section class="panel">
+          <h3>Dialog</h3>
+          <p class="hint">Modal focus trap, Escape, return focus.</p>
+          <ui-dialog>
+            <ui-dialog-trigger>
+              <button type="button">Share link</button>
+            </ui-dialog-trigger>
+            <ui-dialog-backdrop hidden></ui-dialog-backdrop>
+            <ui-dialog-content hidden>
+              <ui-dialog-title>Share link</ui-dialog-title>
+              <ui-dialog-description>
+                Anyone with this link can view the project.
+              </ui-dialog-description>
+              <ui-field style="display: block; margin-top: 1rem">
+                <ui-field-label>Link</ui-field-label>
+                <ui-input>
+                  <input readonly value="https://example.com/project" />
+                </ui-input>
+              </ui-field>
+              <div
+                style="
+                  display: flex;
+                  justify-content: flex-end;
+                  gap: 0.5rem;
+                  margin-top: 1rem;
+                "
+              >
+                <ui-dialog-close>
+                  <button type="button">Cancel</button>
+                </ui-dialog-close>
+                <ui-dialog-close>
+                  <button type="button" data-variant="solid">Done</button>
+                </ui-dialog-close>
+              </div>
+            </ui-dialog-content>
+          </ui-dialog>
+        </section>
+
+        <section class="panel">
+          <h3>Popover, Menu, Tooltip</h3>
+          <p class="hint">Anchored popups in the top layer.</p>
+          <div class="row">
+            <ui-popover>
+              <ui-popover-trigger>
+                <button type="button">Details</button>
+              </ui-popover-trigger>
+              <ui-popover-content side="bottom" align="start" side-offset="8">
+                <ui-popover-title>Project details</ui-popover-title>
+                <ui-popover-description>
+                  Last updated today. 12 collaborators.
+                </ui-popover-description>
+                <ui-popover-close style="display: block; margin-top: 0.75rem">
+                  <button type="button" data-variant="solid">Done</button>
+                </ui-popover-close>
+              </ui-popover-content>
+            </ui-popover>
+
+            <ui-menu id="file-menu">
+              <ui-menu-trigger>
+                <button type="button">Actions</button>
+              </ui-menu-trigger>
+              <ui-menu-content>
+                <ui-menu-item value="rename">Rename</ui-menu-item>
+                <ui-menu-item value="duplicate">Duplicate</ui-menu-item>
+                <ui-menu-separator></ui-menu-separator>
+                <ui-menu-item value="delete" data-variant="danger">Delete</ui-menu-item>
+              </ui-menu-content>
+            </ui-menu>
+
+            <ui-tooltip>
+              <ui-tooltip-trigger>
+                <button type="button" aria-label="Bookmark">★</button>
+              </ui-tooltip-trigger>
+              <ui-tooltip-content>Add to library</ui-tooltip-content>
+            </ui-tooltip>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Slider</h3>
+          <p class="hint">Drag or use arrow keys on the thumb.</p>
+          <ui-slider aria-label="Volume" id="volume" default-value="42" style="display: block">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 0.75rem;
+                font-size: 0.875rem;
+              "
+            >
+              <span style="font-weight: 500">Volume</span>
+              <ui-slider-value></ui-slider-value>
+            </div>
+            <ui-slider-control>
+              <ui-slider-track>
+                <ui-slider-indicator></ui-slider-indicator>
+                <ui-slider-thumb aria-label="Volume"></ui-slider-thumb>
+              </ui-slider-track>
+            </ui-slider-control>
+          </ui-slider>
+        </section>
+
+        <section class="panel wide">
+          <h3>Accordion</h3>
+          <p class="hint">Headings expand panels; one open at a time by default.</p>
+          <ui-accordion default-value="what">
+            <ui-accordion-item value="what">
+              <ui-accordion-header>
+                <h4>
+                  <ui-accordion-trigger>
+                    <button type="button">
+                      What does this package do?
+                      <span aria-hidden="true">▾</span>
+                    </button>
+                  </ui-accordion-trigger>
+                </h4>
+              </ui-accordion-header>
+              <ui-accordion-panel>
+                It ships a theme and dual distribution (npm entries + CDN
+                auto-loader) on top of ui-sdk. Tags stay <code>ui-*</code>.
+              </ui-accordion-panel>
+            </ui-accordion-item>
+            <ui-accordion-item value="how">
+              <ui-accordion-header>
+                <h4>
+                  <ui-accordion-trigger>
+                    <button type="button">
+                      How do bundler apps import it?
+                      <span aria-hidden="true">▾</span>
+                    </button>
+                  </ui-accordion-trigger>
+                </h4>
+              </ui-accordion-header>
+              <ui-accordion-panel hidden>
+                Import <code>ui-sdk-elements/dialog</code> and
+                <code>ui-sdk-elements/theme.css</code>. Peer-install
+                <code>@ui-sdk/web</code> and <code>@ui-sdk/core</code>.
+              </ui-accordion-panel>
+            </ui-accordion-item>
+            <ui-accordion-item value="cdn">
+              <ui-accordion-header>
+                <h4>
+                  <ui-accordion-trigger>
+                    <button type="button">
+                      How does the CDN loader work?
+                      <span aria-hidden="true">▾</span>
+                    </button>
+                  </ui-accordion-trigger>
+                </h4>
+              </ui-accordion-header>
+              <ui-accordion-panel hidden>
+                One script scans for <code>ui-*</code> tags and lazy-loads only
+                the entries you use. See <a href="./cdn.html">cdn.html</a>.
+              </ui-accordion-panel>
+            </ui-accordion-item>
+          </ui-accordion>
+        </section>
+      </div>
+    </div>
+
+    <script type="module">
+      const log = document.querySelector("#event-log")
+
+      function note(message) {
+        if (!log) return
+        const time = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        const line = document.createElement("p")
+        line.textContent = `${time}  ${message}`
+        log.prepend(line)
+        while (log.children.length > 6) log.lastElementChild?.remove()
+      }
+
+      document.querySelector("#formatting")?.addEventListener(
+        "pressedchange",
+        (event) => {
+          if (!(event instanceof CustomEvent) || !(event.target instanceof HTMLElement))
+            return
+          note(`Toggle “${event.target.textContent?.trim()}” → ${event.detail.value}`)
+        },
+        { capture: true },
+      )
+
+      document.querySelector("#notify")?.addEventListener("checkedchange", (event) => {
+        if (!(event instanceof CustomEvent)) return
+        note(`Notifications → ${event.detail.value ? "on" : "off"}`)
+      })
+
+      document.querySelector("#role")?.addEventListener("valuechange", (event) => {
+        if (!(event instanceof CustomEvent)) return
+        note(`Role → ${event.detail.value}`)
+      })
+
+      document.querySelector("#file-menu")?.addEventListener("action", (event) => {
+        if (!(event instanceof CustomEvent)) return
+        note(`Menu → ${event.detail.value}`)
+      })
+
+      document.querySelector("#volume")?.addEventListener("valuechange", (event) => {
+        if (!(event instanceof CustomEvent)) return
+        note(`Volume → ${event.detail.value}`)
+      })
+    </script>
+  </body>
+</html>

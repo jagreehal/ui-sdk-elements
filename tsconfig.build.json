@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "rewriteRelativeImportExtensions": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src/catalog.ts", "src/spec-html.ts", "src/render-spec.ts", "src/runtime.ts", "src/loader.ts", "src/create-loader.ts", "src/vite.ts", "src/entries/step-grid.ts"]
+}

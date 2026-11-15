@@ -1,0 +1,251 @@
+@layer ui-sdk;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fafaf9;
+  color: #18181b;
+  font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 21rem minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+.controls {
+  position: sticky;
+  top: 0;
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: 1.5rem 1.25rem 2rem;
+  border-inline-end: 1px solid var(--ds-line);
+  background: var(--ds-surface);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--ds-accent);
+  font-family: var(--ds-font-mono);
+  font-size: 0.75rem;
+}
+
+h1 {
+  margin: 0.25rem 0 0.375rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin: 0;
+  color: var(--ds-ink-soft);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.group {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.group-title {
+  margin: 0;
+  color: var(--ds-ink-soft);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.picker-row {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.field-label {
+  color: var(--ds-ink-soft);
+  font-size: 0.8125rem;
+}
+
+.dial {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.125rem 0.75rem;
+}
+
+.dial [data-slot="slider-control"] {
+  grid-column: 1 / -1;
+}
+
+.controls [data-slot="select"] {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.checks {
+  display: grid;
+  gap: 0.375rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.checks li {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.chip {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.checks strong {
+  font-family: var(--ds-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.verdict {
+  min-width: 4.5rem;
+  color: var(--ds-accent-ink);
+  font-size: 0.75rem;
+  text-align: end;
+}
+
+.checks li[data-pass="false"] .verdict {
+  color: var(--ds-warn);
+  font-weight: 600;
+}
+
+.tokens-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tokens {
+  max-height: 14rem;
+  margin: 0;
+  overflow: auto;
+  padding: 0.75rem;
+  border-radius: var(--ds-radius);
+  background: #18181b;
+  color: #e4e4e7;
+  font-family: var(--ds-font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+}
+
+.preview {
+  min-width: 0;
+  padding: 1.25rem clamp(1rem, 3vw, 2.5rem) 3rem;
+  background: var(--ds-paper);
+  color: var(--ds-ink);
+  font-family: var(--ds-font);
+  transition: background-color 200ms;
+}
+
+.note {
+  margin: 0 0 1rem;
+  color: var(--ds-ink-soft);
+  font-size: 0.8125rem;
+}
+
+.note code,
+.tile h3 code {
+  font-family: var(--ds-font-mono);
+  font-size: 0.75rem;
+}
+
+.page-frame {
+  max-width: 64rem;
+}
+
+.sampler {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1rem;
+}
+
+.tile {
+  display: grid;
+  align-content: start;
+  gap: 0.875rem;
+  padding: 1.125rem;
+  border: 1px solid var(--ds-line);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+  color: var(--ds-ink);
+}
+
+.tile.wide {
+  grid-column: 1 / -1;
+}
+
+.tile h3 {
+  margin: 0;
+  color: var(--ds-ink-soft);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.setting:has([data-slot="checkbox"]) {
+  justify-content: flex-start;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tile [data-slot="step-grid"] {
+  --step-size: 2rem;
+}
+
+@media (max-width: 56rem) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .controls {
+    position: static;
+    height: auto;
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--ds-line);
+  }
+}

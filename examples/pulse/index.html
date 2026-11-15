@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pulse · a groovebox from ui-sdk-elements</title>
+    <meta name="description" content="A drum machine built from ui-sdk web components, a branded step grid composed from ui-sdk core, and Web Audio. No framework, no samples." />
+    <meta name="theme-color" content="#11100e" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+    <script type="module" src="./main.ts"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="masthead">
+        <div class="brand">
+          <span class="mark" aria-hidden="true"></span>
+          <span class="wordmark">Pulse</span>
+        </div>
+
+        <ui-menubar aria-label="Pulse">
+          <ui-menu id="pattern-menu">
+            <ui-menu-trigger><button>Pattern</button></ui-menu-trigger>
+            <ui-menu-content>
+              <ui-menu-item value="randomize" shortcut="R">Randomize</ui-menu-item>
+              <ui-menu-item value="copy-next">Copy to next pattern</ui-menu-item>
+              <ui-menu-item value="share">Copy share link</ui-menu-item>
+              <ui-menu-separator></ui-menu-separator>
+              <ui-menu-item value="clear" data-agent-confirm="Clears every step of the current pattern">Clear pattern</ui-menu-item>
+            </ui-menu-content>
+          </ui-menu>
+          <ui-menu>
+            <ui-menu-trigger><button>Kit</button></ui-menu-trigger>
+            <ui-menu-content>
+              <ui-menu-radio-group id="kit" default-value="analog">
+                <ui-menu-radio-item value="analog"><ui-menu-item-indicator></ui-menu-item-indicator>Analog</ui-menu-radio-item>
+                <ui-menu-radio-item value="crisp"><ui-menu-item-indicator></ui-menu-item-indicator>Crisp</ui-menu-radio-item>
+                <ui-menu-radio-item value="dust"><ui-menu-item-indicator></ui-menu-item-indicator>Dust</ui-menu-radio-item>
+              </ui-menu-radio-group>
+            </ui-menu-content>
+          </ui-menu>
+        </ui-menubar>
+
+        <p class="keys" aria-hidden="true"><kbd>P</kbd> play <kbd>1</kbd>–<kbd>4</kbd> pattern <kbd>R</kbd> randomize</p>
+      </header>
+
+      <ui-toolbar class="transport" aria-label="Transport">
+        <ui-toggle id="play"><button aria-keyshortcuts="P"><span class="play-icon" aria-hidden="true"></span><span class="play-label">Play</span></button></ui-toggle>
+        <ui-toolbar-separator></ui-toolbar-separator>
+
+        <ui-slider id="tempo" aria-label="Tempo" class="dial" min="60" max="180" default-value="112">
+          <span class="dial-label" aria-hidden="true">Tempo</span>
+          <ui-slider-value></ui-slider-value>
+          <ui-slider-control><ui-slider-track><ui-slider-indicator></ui-slider-indicator><ui-slider-thumb aria-label="Tempo"></ui-slider-thumb></ui-slider-track></ui-slider-control>
+        </ui-slider>
+        <ui-slider id="swing" aria-label="Swing" class="dial" min="0" max="60" default-value="12">
+          <span class="dial-label" aria-hidden="true">Swing</span>
+          <ui-slider-value></ui-slider-value>
+          <ui-slider-control><ui-slider-track><ui-slider-indicator></ui-slider-indicator><ui-slider-thumb aria-label="Swing"></ui-slider-thumb></ui-slider-track></ui-slider-control>
+        </ui-slider>
+        <ui-toolbar-separator></ui-toolbar-separator>
+
+        <ui-segmented-control id="pattern" aria-label="Active pattern" default-value="0">
+          <ui-segmented-control-indicator></ui-segmented-control-indicator>
+          <ui-segmented-control-item value="0">A</ui-segmented-control-item>
+          <ui-segmented-control-item value="1">B</ui-segmented-control-item>
+          <ui-segmented-control-item value="2">C</ui-segmented-control-item>
+          <ui-segmented-control-item value="3">D</ui-segmented-control-item>
+        </ui-segmented-control>
+
+        <ui-meter id="level" class="level" value="0">
+          <ui-meter-label>Output</ui-meter-label>
+          <ui-meter-value></ui-meter-value>
+          <ui-meter-track><ui-meter-indicator></ui-meter-indicator></ui-meter-track>
+        </ui-meter>
+      </ui-toolbar>
+
+      <main class="deck">
+        <section class="panel steps-panel" aria-labelledby="steps-title">
+          <h2 id="steps-title" class="panel-title">Steps</h2>
+          <div class="steps-scroll">
+            <ol class="ruler" aria-hidden="true"></ol>
+            <ui-step-grid id="grid" aria-labelledby="steps-title"></ui-step-grid>
+          </div>
+        </section>
+
+        <section class="panel scope-panel" aria-label="Scope">
+          <canvas id="scope" aria-hidden="true"></canvas>
+          <p class="scope-note">Every sound is synthesized live with Web Audio. No samples.</p>
+        </section>
+
+        <section class="panel sound-panel" aria-label="Sound">
+          <ui-tabs default-value="mixer" aria-label="Sound">
+            <ui-tabs-list aria-label="Sound">
+              <ui-tabs-tab value="mixer"><button>Mixer</button></ui-tabs-tab>
+              <ui-tabs-tab value="voice"><button>Voice</button></ui-tabs-tab>
+              <ui-tabs-tab value="space"><button>Space</button></ui-tabs-tab>
+            </ui-tabs-list>
+
+            <ui-tabs-panel value="mixer"><div class="mixer" id="mixer"></div></ui-tabs-panel>
+
+            <ui-tabs-panel value="voice">
+              <div class="stack">
+                <ui-segmented-control id="voice" aria-label="Voice" default-value="5"></ui-segmented-control>
+                <div class="knobs" id="voice-knobs"></div>
+              </div>
+            </ui-tabs-panel>
+
+            <ui-tabs-panel value="space">
+              <div class="stack">
+                <div class="row-label">
+                  <span id="echo-label">Echo time</span>
+                  <ui-segmented-control id="echo" aria-labelledby="echo-label" default-value="0.75">
+                    <ui-segmented-control-indicator></ui-segmented-control-indicator>
+                    <ui-segmented-control-item value="0.5">1/8</ui-segmented-control-item>
+                    <ui-segmented-control-item value="0.75">3/16</ui-segmented-control-item>
+                    <ui-segmented-control-item value="1">1/4</ui-segmented-control-item>
+                    <ui-segmented-control-item value="1.5">3/8</ui-segmented-control-item>
+                  </ui-segmented-control>
+                </div>
+                <ui-slider id="feedback" aria-label="Echo feedback" class="dial wide" min="0" max="85" default-value="38">
+                  <span class="dial-label" aria-hidden="true">Echo feedback</span>
+                  <ui-slider-value></ui-slider-value>
+                  <ui-slider-control><ui-slider-track><ui-slider-indicator></ui-slider-indicator><ui-slider-thumb aria-label="Echo feedback"></ui-slider-thumb></ui-slider-track></ui-slider-control>
+                </ui-slider>
+              </div>
+            </ui-tabs-panel>
+          </ui-tabs>
+        </section>
+      </main>
+
+      <footer class="colophon">
+        <p>
+          Built from <code>ui-sdk-elements</code>: stock ui-sdk components, one composed component (<code>ui-step-grid</code>),
+          and a brand that is only token overrides. The loader fetched just the tags on this page.
+        </p>
+        <p id="loaded" class="loaded"></p>
+      </footer>
+    </div>
+
+    <ui-toast-region data-agent-hidden>
+      <template>
+        <ui-toast><ui-toast-title></ui-toast-title><ui-toast-description></ui-toast-description></ui-toast>
+      </template>
+    </ui-toast-region>
+  </body>
+</html>
