@@ -2,7 +2,14 @@ import type { Page } from "@playwright/test"
 
 export type AgentArg = string | number | boolean
 export type AgentStep = { ref: string; action: string; args?: AgentArg[] }
-export type AgentEntry = { component: string; label?: string; ref: string; offPage?: boolean; actions?: string[] }
+export type AgentEntry = {
+  component: string
+  label?: string
+  ref: string
+  offPage?: boolean
+  actions?: string[]
+  items?: { value: string; label: string }[]
+}
 export type ActResult = { ok: boolean; error?: { message: string } }
 
 type Bridge = { agent: { snapshot(): AgentEntry[]; act(input: { steps: AgentStep[] }): Promise<ActResult> } }

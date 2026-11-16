@@ -25,6 +25,7 @@ export class Engine {
   isOn: (row: number, step: number) => boolean = () => false
 
   #ctx?: AudioContext
+  #wanted = false
   #out!: GainNode
   #tone!: BiquadFilterNode
   #send!: GainNode
@@ -105,8 +106,10 @@ export class Engine {
 
   async start() {
     const ctx = this.#setup()
+    this.#wanted = true
+    // Before the person has used the page, resume() waits for their first gesture; Stop in between cancels.
     await ctx.resume()
-    if (this.playing) return
+    if (this.playing || !this.#wanted) return
     this.playing = true
     this.#step = 0
     this.#next = ctx.currentTime + 0.06
@@ -115,6 +118,7 @@ export class Engine {
   }
 
   stop() {
+    this.#wanted = false
     this.playing = false
     clearInterval(this.#timer)
   }

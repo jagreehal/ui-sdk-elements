@@ -89,7 +89,15 @@ const stepGrid = definePrimitive({
           .flatMap((c, col) => (/[x1*]/i.test(c) ? [cellId(row, col)] : []))
         set([...value.filter((cell) => !cell.startsWith(`${row}:`)), ...hits], "imperative")
       },
-      clear: () => set([], "imperative")
+      clear: () => set([], "imperative"),
+      /** Each track as `Kick: x...x...` in setTrack's format, so an agent reads the pattern the way it writes one. */
+      patterns: () => {
+        const { value, tracks, steps } = context.store.get()
+        return tracks.map((track, row) => {
+          const hits = Array.from({ length: steps }, (_, col) => (value.includes(cellId(row, col)) ? "x" : "."))
+          return { value: track, label: `${track}: ${hits.join("")}` }
+        })
+      }
     }
   },
   slots: (slot) => ({
@@ -151,7 +159,7 @@ const stepGrid = definePrimitive({
       bind: (el, { api, props }) => api.grid.bind(el, props)
     })
   }),
-  agent: { actions: ["toggle", "setTrack", "clear"] }
+  agent: { actions: ["toggle", "setTrack", "clear"], items: (api) => api.patterns() }
 })
 
 createParts(stepGrid, {

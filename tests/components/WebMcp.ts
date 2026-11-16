@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test"
 
-import type { ActResult, AgentStep } from "./AgentBridge"
+import type { ActResult, AgentEntry, AgentStep } from "./AgentBridge"
 
 export type WebMcpTool = { name: string; description: string; inputSchema: string }
 
@@ -86,16 +86,25 @@ export class WebMcp {
 
   /** Calls `act` the way a browser agent does and parses its JSON answer. */
   async act(steps: AgentStep[]): Promise<ActResult> {
-    const text = await this.page.evaluate(
-      async ({ steps }) => {
-        const context = document.modelContext!
-        const tool = (await context.getTools()).find((t) => t.name === "act")
-        if (!tool) throw new Error('No WebMCP tool "act"')
-        return context.executeTool(tool, JSON.stringify({ steps }))
-      },
-      { steps }
-    )
-    const result: ActResult = JSON.parse(text)
+    const result: ActResult = JSON.parse(await this.#call("act", { steps }))
     return result
+  }
+
+  /** What a browser agent reads first: every named component, its state, actions and items. */
+  async snapshot(): Promise<AgentEntry[]> {
+    const result: AgentEntry[] = JSON.parse(await this.#call("snapshot", {}))
+    return result
+  }
+
+  async #call(name: string, input: ToolInput): Promise<string> {
+    return this.page.evaluate(
+      async ({ name, input }) => {
+        const context = document.modelContext!
+        const tool = (await context.getTools()).find((t) => t.name === name)
+        if (!tool) throw new Error(`No WebMCP tool "${name}"`)
+        return context.executeTool(tool, JSON.stringify(input))
+      },
+      { name, input }
+    )
   }
 }
