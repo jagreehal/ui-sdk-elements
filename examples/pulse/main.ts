@@ -157,8 +157,15 @@ function setCells(cells: string[]) {
 function setPlaying(playing: boolean) {
   const toggle = $<{ pressed: boolean }>("#play")
   if (toggle.pressed !== playing) toggle.pressed = playing
-  if (playing) void engine.start()
-  else {
+  if (playing) {
+    void engine.start()
+    // An agent can press Play before the person has used the page, and the browser holds the sound until they do.
+    setTimeout(() => {
+      if (engine.playing || !toggle.pressed) return
+      setPlaying(false)
+      toast("Press Play to hear it", { description: "Your browser starts sound once you have used the page." })
+    }, 500)
+  } else {
     engine.stop()
     queue.length = 0
     grid.playhead = -1
