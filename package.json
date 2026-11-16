@@ -1,6 +1,6 @@
 {
   "name": "ui-sdk-elements",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Branded, on-demand web components built on ui-sdk: one set of tokens themes every component, a CDN loader fetches only the tags on the page, and a catalog lets agents generate pages. Not affiliated with Vercel.",
   "license": "Apache-2.0",
   "author": "Jag Reehal",
